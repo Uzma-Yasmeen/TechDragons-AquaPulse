@@ -15,6 +15,8 @@ def load_or_generate_data():
         df = pd.read_json(DB_FILE)
         if "Alerts" not in df.columns:
             df["Alerts"] = [[] for _ in range(len(df))]
+        if "Rebate Status" not in df.columns:
+            df["Rebate Status"] = "Pending"
         return df
         
     # User requested exactly <=20 buildings with exactly 33/33/33 split.

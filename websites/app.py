@@ -91,18 +91,33 @@ elif st.session_state.role == "authority":
         st.title("💰 Green Infrastructure Tax Rebates")
         st.write("Automatically calculate and disburse tax discounts for highly compliant rainwater harvesting properties.")
         
-        rebate_df = df[df['Status'] == 'Healthy'].copy()
+        # Filter for properties that are BOTH Healthy AND have not yet been paid for this cycle
+        rebate_df = df[(df['Status'] == 'Healthy') & (df['Rebate Status'] == 'Pending')].copy()
         
         if not rebate_df.empty:
             # Flat 2500 rebate for healthy systems
             rebate_df['Issuable Tax Rebate (₹)'] = 2500 
-            st.dataframe(rebate_df[['Building', 'Zone', 'Efficiency (%)', 'Last Cleaned', 'Issuable Tax Rebate (₹)']].reset_index(drop=True), use_container_width=True)
+            st.dataframe(
+                rebate_df[['Building', 'Zone', 'Efficiency (%)', 'Last Cleaned', 'Issuable Tax Rebate (₹)']].reset_index(drop=True), 
+                use_container_width=True
+            )
             
             if st.button("💳 Approve Rebates & Disburse Funds", type="primary"):
                 st.balloons()
+                # Update the original dataframe and save to the database
+                for idx in rebate_df.index:
+                    df.at[idx, 'Rebate Status'] = 'Disbursed'
+                
+                df.to_json(DB_FILE, orient='records', indent=4)
+                st.cache_data.clear() # Ensure the next run reads the updated JSON
+                
                 st.success(f"✅ Ledger Transaction Complete: ₹ {len(rebate_df) * 2500} successfully credited to {len(rebate_df)} compliant owners automatically.")
+                st.info("The qualifying list has been cleared and moved to the city's financial ledger for the current period.")
+                # Force rerun so the UI reflects the zero records
+                st.rerun()
         else:
-            st.warning("No properties currently qualify for the Green Rebate.")
+            st.success("🎉 All Green Infrastructure rebates for the current cycle have been successfully disbursed!")
+            st.info("Check back next month for the next compliance evaluation cycle.")
             
         st.stop()
     
