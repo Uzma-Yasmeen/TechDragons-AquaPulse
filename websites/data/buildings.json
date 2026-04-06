@@ -1,0 +1,200 @@
+[
+    {
+        "Building":"Building 1",
+        "Zone":"West Ward",
+        "Lat":13.0543930798,
+        "Lon":80.1774875128,
+        "Capacity (L)":5000,
+        "Current Level (L)":4811,
+        "Efficiency (%)":96.2,
+        "Status":"Healthy",
+        "Last Cleaned":"1 months ago"
+    },
+    {
+        "Building":"Building 2",
+        "Zone":"South Ward",
+        "Lat":13.1060789953,
+        "Lon":80.2378430211,
+        "Capacity (L)":10000,
+        "Current Level (L)":9783,
+        "Efficiency (%)":97.8,
+        "Status":"Healthy",
+        "Last Cleaned":"0 months ago"
+    },
+    {
+        "Building":"Building 3",
+        "Zone":"West Ward",
+        "Lat":13.1085046675,
+        "Lon":80.2851521694,
+        "Capacity (L)":5000,
+        "Current Level (L)":3590,
+        "Efficiency (%)":71.8,
+        "Status":"Needs Cleaning",
+        "Last Cleaned":"3 months ago"
+    },
+    {
+        "Building":"Building 4",
+        "Zone":"North Ward",
+        "Lat":13.0891873126,
+        "Lon":80.1647729662,
+        "Capacity (L)":5000,
+        "Current Level (L)":561,
+        "Efficiency (%)":11.2,
+        "Status":"Critical\/Clogged",
+        "Last Cleaned":"7 months ago"
+    },
+    {
+        "Building":"Building 5",
+        "Zone":"East Ward",
+        "Lat":13.1158570973,
+        "Lon":80.2699862991,
+        "Capacity (L)":10000,
+        "Current Level (L)":9626,
+        "Efficiency (%)":96.3,
+        "Status":"Healthy",
+        "Last Cleaned":"2 months ago"
+    },
+    {
+        "Building":"Building 6",
+        "Zone":"South Ward",
+        "Lat":13.1186760832,
+        "Lon":80.3304519777,
+        "Capacity (L)":15000,
+        "Current Level (L)":7141,
+        "Efficiency (%)":47.6,
+        "Status":"Needs Cleaning",
+        "Last Cleaned":"3 months ago"
+    },
+    {
+        "Building":"Building 7",
+        "Zone":"North Ward",
+        "Lat":13.0449183692,
+        "Lon":80.2426341967,
+        "Capacity (L)":10000,
+        "Current Level (L)":517,
+        "Efficiency (%)":5.2,
+        "Status":"Critical\/Clogged",
+        "Last Cleaned":"7 months ago"
+    },
+    {
+        "Building":"Building 8",
+        "Zone":"South Ward",
+        "Lat":12.9874637541,
+        "Lon":80.2057281332,
+        "Capacity (L)":15000,
+        "Current Level (L)":3043,
+        "Efficiency (%)":20.3,
+        "Status":"Critical\/Clogged",
+        "Last Cleaned":"6 months ago"
+    },
+    {
+        "Building":"Building 9",
+        "Zone":"West Ward",
+        "Lat":13.0609373387,
+        "Lon":80.2610840103,
+        "Capacity (L)":10000,
+        "Current Level (L)":6316,
+        "Efficiency (%)":63.2,
+        "Status":"Needs Cleaning",
+        "Last Cleaned":"3 months ago"
+    },
+    {
+        "Building":"Building 10",
+        "Zone":"East Ward",
+        "Lat":13.084607478,
+        "Lon":80.2452329282,
+        "Capacity (L)":5000,
+        "Current Level (L)":4408,
+        "Efficiency (%)":88.2,
+        "Status":"Healthy",
+        "Last Cleaned":"0 months ago"
+    },
+    {
+        "Building":"Building 11",
+        "Zone":"East Ward",
+        "Lat":13.1001709846,
+        "Lon":80.1999275918,
+        "Capacity (L)":5000,
+        "Current Level (L)":4868,
+        "Efficiency (%)":97.4,
+        "Status":"Healthy",
+        "Last Cleaned":"1 months ago"
+    },
+    {
+        "Building":"Building 12",
+        "Zone":"West Ward",
+        "Lat":13.0126978511,
+        "Lon":80.2906671667,
+        "Capacity (L)":15000,
+        "Current Level (L)":1276,
+        "Efficiency (%)":8.5,
+        "Status":"Critical\/Clogged",
+        "Last Cleaned":"7 months ago"
+    },
+    {
+        "Building":"Building 13",
+        "Zone":"West Ward",
+        "Lat":13.1652704604,
+        "Lon":80.3214547599,
+        "Capacity (L)":5000,
+        "Current Level (L)":3471,
+        "Efficiency (%)":69.4,
+        "Status":"Needs Cleaning",
+        "Last Cleaned":"4 months ago"
+    },
+    {
+        "Building":"Building 14",
+        "Zone":"North Ward",
+        "Lat":13.0505522478,
+        "Lon":80.3624135111,
+        "Capacity (L)":10000,
+        "Current Level (L)":5226,
+        "Efficiency (%)":52.3,
+        "Status":"Needs Cleaning",
+        "Last Cleaned":"4 months ago"
+    },
+    {
+        "Building":"Building 15",
+        "Zone":"North Ward",
+        "Lat":13.0850408557,
+        "Lon":80.2621970985,
+        "Capacity (L)":10000,
+        "Current Level (L)":2522,
+        "Efficiency (%)":25.2,
+        "Status":"Critical\/Clogged",
+        "Last Cleaned":"7 months ago"
+    },
+    {
+        "Building":"Building 16",
+        "Zone":"East Ward",
+        "Lat":13.076074536,
+        "Lon":80.2565816257,
+        "Capacity (L)":15000,
+        "Current Level (L)":2734,
+        "Efficiency (%)":18.2,
+        "Status":"Critical\/Clogged",
+        "Last Cleaned":"6 months ago"
+    },
+    {
+        "Building":"Building 17",
+        "Zone":"South Ward",
+        "Lat":13.1045070005,
+        "Lon":80.2192363198,
+        "Capacity (L)":5000,
+        "Current Level (L)":4551,
+        "Efficiency (%)":91.0,
+        "Status":"Healthy",
+        "Last Cleaned":"2 months ago"
+    },
+    {
+        "Building":"Building 18",
+        "Zone":"South Ward",
+        "Lat":13.0841440015,
+        "Lon":80.1911204558,
+        "Capacity (L)":15000,
+        "Current Level (L)":9694,
+        "Efficiency (%)":64.6,
+        "Status":"Needs Cleaning",
+        "Last Cleaned":"3 months ago"
+    }
+]
