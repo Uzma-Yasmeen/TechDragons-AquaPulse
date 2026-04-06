@@ -12,7 +12,10 @@ def load_or_generate_data():
         os.makedirs(DATA_DIR)
         
     if os.path.exists(DB_FILE):
-        return pd.read_json(DB_FILE)
+        df = pd.read_json(DB_FILE)
+        if "Alerts" not in df.columns:
+            df["Alerts"] = [[] for _ in range(len(df))]
+        return df
         
     # User requested exactly <=20 buildings with exactly 33/33/33 split.
     # 18 buildings gives exactly 6 of each.
@@ -57,7 +60,8 @@ def load_or_generate_data():
             "Current Level (L)": current_level,
             "Efficiency (%)": round(efficiency, 1),
             "Status": preset_status,
-            "Last Cleaned": f"{months_since} months ago"
+            "Last Cleaned": f"{months_since} months ago",
+            "Alerts": []
         })
         
     df = pd.DataFrame(data)

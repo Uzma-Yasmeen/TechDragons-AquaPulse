@@ -33,14 +33,12 @@ st.markdown("""
 # -----------------
 # Real Data Integration
 # -----------------
-from utils.data_manager import load_or_generate_data
+from utils.data_manager import load_or_generate_data, DB_FILE
 
 @st.cache_data
 def load_application_data():
     return load_or_generate_data()
 
-# Force Streamlit to drop the old cached 20-row file and load the new 30-row JSON.
-st.cache_data.clear() 
 df = load_application_data()
 
 # -----------------
@@ -189,11 +187,34 @@ elif st.session_state.role == "authority":
         
         colA, colB = st.columns([1.5, 2.5])
         with colA:
-            if st.button("📨 Dispatch Defect Notices (Auto-Email)", use_container_width=True, type="primary"):
+            if st.button("📨 Dispatch Defect Notices (Direct Dashboard Alert)", use_container_width=True, type="primary"):
                 import time
                 with st.spinner("Compiling municipal violation list and transmitting..."):
                     time.sleep(2)
-                st.success(f"Legal notices transmitted to owners of all {len(critical_df)} violating properties.")
+                
+                # Update each critical building with a formal municipal alert
+                alert_text = {
+                    "type": "Critical",
+                    "title": "🚨 MUNICIPAL VIOLATION NOTICE",
+                    "content": "Your system has been flagged for zero yield. Clean filters immediately to avoid a ₹2,500 non-compliance fine.",
+                    "date": pd.Timestamp.today().strftime('%Y-%m-%d %H:%M')
+                }
+                
+                for idx in critical_df.index:
+                    current_alerts = list(df.at[idx, 'Alerts']) 
+                    # Avoid duplicates
+                    if not any(a['title'] == alert_text['title'] for a in current_alerts):
+                        current_alerts.append(alert_text)
+                        df.at[idx, 'Alerts'] = current_alerts
+                
+                # Save the new state back to the database
+                df.to_json(DB_FILE, orient='records', indent=4)
+                st.cache_data.clear()
+                
+                st.toast(f"✅ Success: Municipal alerts transmitted to {len(critical_df)} properties.")
+                st.success(f"Official municipal alerts transmitted directly to building dashboards of {len(critical_df)} violating properties.")
+                # We don't call st.rerun() immediately so the user can see the success message.
+                # The next user interaction will reflect the state.
                 
         with colB:
             # Generate a CSV payload dynamically 
@@ -245,9 +266,11 @@ elif st.session_state.role == "owner":
                 })
                 
                 # --- DYNAMIC DATABASE UPDATE ---
-                df.loc[df['Building'] == my_bldg['Building'], 'Last Cleaned'] = "0 months ago (Just Now)"
-                df.loc[df['Building'] == my_bldg['Building'], 'Status'] = "Healthy"
-                df.loc[df['Building'] == my_bldg['Building'], 'Efficiency (%)'] = 98.5
+                bldg_idx = df[df['Building'] == my_bldg['Building']].index[0]
+                df.at[bldg_idx, 'Last Cleaned'] = "0 months ago (Just Now)"
+                df.at[bldg_idx, 'Status'] = "Healthy"
+                df.at[bldg_idx, 'Efficiency (%)'] = 98.5
+                df.at[bldg_idx, 'Alerts'] = [] # Clear alerts on maintenance
                 
                 # Save the new state natively back to the JSON database
                 from utils.data_manager import DB_FILE
@@ -263,6 +286,25 @@ elif st.session_state.role == "owner":
     st.title(f"Dashboard: {my_bldg['Building']}")
     st.write(f"📍 {my_bldg['Zone']}")
     
+    # --- MUNICIPAL ALERTS (NEW FEATURE) ---
+    if my_bldg['Alerts'] and len(my_bldg['Alerts']) > 0:
+        for i, alert in enumerate(my_bldg['Alerts']):
+            with st.container():
+                st.markdown(f"""
+                <div style="background-color: #ffe6e6; border-left: 5px solid #dc3545; padding: 15px; border-radius: 8px; margin-bottom: 20px; animation: pulse 2s infinite;">
+                    <h4 style="color: #dc3545; margin: 0;">{alert['title']}</h4>
+                    <p style="color: #333; margin: 5px 0;">{alert['content']}</p>
+                    <small style="color: #666;">Received: {alert['date']}</small>
+                </div>
+                <style>
+                @keyframes pulse {{
+                    0% {{ box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }}
+                    70% {{ box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }}
+                    100% {{ box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }}
+                }}
+                </style>
+                """, unsafe_allow_html=True)
+
     # Owner Alerts & System Diagnostics
     st.markdown("### 🔍 System Diagnostics")
     if my_bldg['Status'] == 'Critical/Clogged':
@@ -348,6 +390,18 @@ elif st.session_state.role == "owner":
         fig_gauge.update_layout(margin=dict(t=40, b=20, l=40, r=40), height=320)
         st.plotly_chart(fig_gauge, use_container_width=True)
         
+        # Manual Data Entry (MVP Stage Features)
+        st.write("### 📝 Manual Data Log")
+        manual_lvl = st.number_input("Enter Current Tank Level (Liters)", min_value=0, max_value=my_bldg['Capacity (L)'], value=int(my_bldg['Current Level (L)']))
+        if st.button("📤 Submit Manual Log", use_container_width=True):
+            # Update the local buildings JSON with manual data
+            bldg_idx = df[df['Building'] == my_bldg['Building']].index[0]
+            df.at[bldg_idx, 'Current Level (L)'] = manual_lvl
+            df.to_json(DB_FILE, orient='records', indent=4)
+            st.cache_data.clear()
+            st.success(f"✅ Tank level manual log updated to {manual_lvl} L!")
+            st.rerun()
+
         # Action Buttons
         st.write("### Actions")
         if st.button("🔧 Request City Vetted Cleaning Service", use_container_width=True, type="primary"):
