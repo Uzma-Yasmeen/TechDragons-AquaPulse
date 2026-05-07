@@ -4,6 +4,8 @@ Welcome to the **AquaPulse Intelligence System**, built by team TechDragons for 
 
 AquaPulse provides an end-to-end analytical framework to verify, monitor, and enforce urban Rainwater Harvesting mandates, tackling severe water scarcity in major Metropolitan areas like Chennai and Bengaluru.
 
+<img width="1213" height="534" alt="image" src="https://github.com/user-attachments/assets/aed0342f-070b-4c32-8334-ad0f590dde34" />
+
 ## 📂 Final Project Structure
 The repository has been fully organized and mapped to match our system architecture:
 ```text
